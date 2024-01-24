@@ -14,15 +14,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "tweets")
 public class Tweet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
 
-    @Column(nullable = false)
-    private String message;
+    @Column(length = 280, nullable = false)
+    private String text;
 
     @Column(nullable = false)
     private User user;
