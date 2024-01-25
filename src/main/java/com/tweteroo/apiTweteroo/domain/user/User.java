@@ -1,6 +1,7 @@
 package com.tweteroo.apiTweteroo.domain.user;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.tweteroo.apiTweteroo.domain.tweet.Tweet;
 
@@ -36,4 +37,9 @@ public class User {
 
     @OneToMany
     private List<Tweet> tweet;
+
+    public User(UserDTO user){
+        this.profileUrl = user.profileUrl();
+        this.username = user.username();
+    }
 }
