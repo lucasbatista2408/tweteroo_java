@@ -36,4 +36,16 @@ public class UserController {
         return ResponseEntity.ok().body(response);
     }
        
+    @GetMapping("/getUser/{id}")
+    public ResponseEntity<Object> getUser(@RequestParam UUID id) {
+        
+        Optional<User> response = repository.findById(id);
+
+        if(!response.isPresent()){
+            return ResponseEntity.badRequest().build();
+        }
+        
+        return ResponseEntity.ok().body(response);
+    }
+    
 }
