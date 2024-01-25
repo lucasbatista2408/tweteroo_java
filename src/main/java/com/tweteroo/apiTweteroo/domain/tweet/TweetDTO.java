@@ -1,5 +1,5 @@
 package com.tweteroo.apiTweteroo.domain.tweet;
 
-import java.util.UUID;
+import com.tweteroo.apiTweteroo.domain.user.User;
 
-public record TweetDTO(String text, UUID user) {}
+public record TweetDTO(String text, User user) {}
