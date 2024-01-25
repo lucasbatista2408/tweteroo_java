@@ -2,6 +2,7 @@ package com.tweteroo.apiTweteroo.domain.tweet;
 
 import java.util.UUID;
 
+
 import com.tweteroo.apiTweteroo.domain.user.User;
 
 import lombok.AllArgsConstructor;
@@ -41,5 +42,10 @@ public class Tweet {
     public Tweet(TweetDTO tweet){
         this.text = tweet.text();
         this.user = tweet.user();
+    }
+
+    public Tweet(String text, User user){
+        this.text = text;
+        this.user = user;
     }
 }

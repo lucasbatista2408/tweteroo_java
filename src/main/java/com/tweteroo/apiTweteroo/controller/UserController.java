@@ -5,34 +5,42 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tweteroo.apiTweteroo.domain.user.User;
 import com.tweteroo.apiTweteroo.domain.user.UserDTO;
 import com.tweteroo.apiTweteroo.repositories.UserRepository;
+import com.tweteroo.apiTweteroo.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
+
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
-    final UserRepository repository;
+    private UserService userService;
 
-    UserController(UserRepository repository){
-        this.repository = repository;
+    public UserController(UserService userService){
+        this.userService = userService;
     }
+
     
     @PostMapping("/createUser")
     public ResponseEntity<User> createUser(@RequestBody UserDTO userDTO) {
 
         User newUser = new User(userDTO);
 
-        User response = repository.save(newUser);
+        User response = userService.createUser(newUser);
 
         return ResponseEntity.ok().body(response);
     }
@@ -40,11 +48,36 @@ public class UserController {
     @GetMapping("/getUser/{id}")
     public ResponseEntity<Object> getUser(@PathVariable UUID id) {
         
-        Optional<User> response = repository.findById(id);
+        Optional<User> response = userService.getUser(id);
 
         if(!response.isPresent()){
             return ResponseEntity.badRequest().build();
         }
+        
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/getUser/all")
+    public List<User> getAllUsers() {
+
+        return userService.getAllUsers();
+    }
+
+    @DeleteMapping("/deleteUser/{id}")
+    public void deleteById(@PathVariable("id") UUID id) {
+        userService.deleteById(id);
+    }
+    
+    @PutMapping("/updateUser/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody UserDTO data) {
+
+        Optional<User> user = userService.getUser(id);
+
+        if (!user.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        User response = userService.updateUser(data, id);
         
         return ResponseEntity.ok().body(response);
     }
