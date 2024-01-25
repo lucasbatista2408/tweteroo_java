@@ -38,7 +38,7 @@ public class Tweet {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    Tweet(TweetDTO tweet){
+    public Tweet(TweetDTO tweet){
         this.text = tweet.text();
         this.user = tweet.user();
     }
