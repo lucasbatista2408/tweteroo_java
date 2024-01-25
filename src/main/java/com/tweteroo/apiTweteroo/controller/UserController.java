@@ -16,15 +16,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
-    @Autowired
-    private UserRepository repository;
+    final UserRepository repository;
+
+    UserController(UserRepository repository){
+        this.repository = repository;
+    }
     
     @PostMapping("/createUser")
     public ResponseEntity<User> createUser(@RequestBody UserDTO userDTO) {
@@ -37,7 +41,7 @@ public class UserController {
     }
        
     @GetMapping("/getUser/{id}")
-    public ResponseEntity<Object> getUser(@RequestParam UUID id) {
+    public ResponseEntity<Object> getUser(@PathVariable UUID id) {
         
         Optional<User> response = repository.findById(id);
 
