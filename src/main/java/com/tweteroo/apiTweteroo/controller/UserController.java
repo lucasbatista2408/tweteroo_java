@@ -34,7 +34,7 @@ public class UserController {
     }
 
     
-    @PostMapping("/createUser")
+    @PostMapping("/createUser") // #1 creates a user providing avatar url and username.
     public ResponseEntity<User> createUser(@RequestBody UserDTO userDTO) {
 
         User newUser = new User(userDTO);
@@ -44,7 +44,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
        
-    @GetMapping("/getUser/{id}")
+    @GetMapping("/getUser/{id}") // #2 gets a specific user providing it's userId.
     public ResponseEntity<Object> getUser(@PathVariable UUID id) {
         
         Optional<User> response = userService.findUser(id);
@@ -56,20 +56,20 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/getUser/all")
+    @GetMapping("/getUser/all")  // #3 returns all users in the db.
     public ResponseEntity<List<User>> getAllUsers() {
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers());
     }
 
-    @DeleteMapping("/deleteUser/{id}")
+    @DeleteMapping("/deleteUser/{id}") // #4 deletes a user when provided with its userId
     public ResponseEntity<Void> deleteById(@PathVariable("id") UUID id) {
         userService.deleteById(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     
-    @PutMapping("/updateUser/{id}")
+    @PutMapping("/updateUser/{id}") // #5 updates a user when provided userId and the information to be updated.
     public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody UserDTO data) {
 
         Optional<User> user = userService.findUser(id);
