@@ -1,7 +1,5 @@
 package com.tweteroo.apiTweteroo.domain.tweet;
 
-import java.util.UUID;
-
 
 import com.tweteroo.apiTweteroo.domain.user.User;
 

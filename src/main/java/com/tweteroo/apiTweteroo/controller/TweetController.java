@@ -10,13 +10,16 @@ import com.tweteroo.apiTweteroo.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 
@@ -24,25 +27,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("api/tweet")
 public class TweetController {
 
-    @Autowired
-    private TweetService service;
+    private TweetService tweetService;
 
-    @Autowired
     private UserService userService;
+
+    public TweetController(TweetService tweetService, UserService userService){
+        this.tweetService = tweetService;
+        this.userService = userService;
+    }
     
     @PostMapping("/create-tweet")
-    public Tweet createTweet(@RequestBody TweetDTO data) {
+    public ResponseEntity<Tweet> createTweet(@RequestBody TweetDTO data) {
         
         User user = userService.getUser(data.userId());
-
-        System.out.println(data.text());
-        System.out.println(user);
         
         Tweet newTweet = new Tweet(data.text(), user);
 
-        Tweet response = service.insertTweet(newTweet);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tweetService.insertTweet(newTweet));
+    }
 
-        return newTweet;
-    } 
+    @GetMapping("/get-all-tweets")
+    public ResponseEntity<List<Tweet>> getAllTweets() {
+        return ResponseEntity.status(HttpStatus.OK).body(tweetService.getAllTweets());
+    }
+
+    @GetMapping("/user/{id}")
+    public void getMethodName(@PathVariable("id") UUID id) {
+
+        userService.getUser(id);
+
+
+    }
+    
+    
     
 }

@@ -1,5 +1,7 @@
 package com.tweteroo.apiTweteroo.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.tweteroo.apiTweteroo.domain.tweet.Tweet;
@@ -18,4 +20,7 @@ public class TweetService {
         return repository.save(data);
     }
     
+    public List<Tweet> getAllTweets(){
+        return repository.findAll();
+    }
 }

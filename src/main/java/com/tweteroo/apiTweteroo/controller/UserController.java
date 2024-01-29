@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tweteroo.apiTweteroo.domain.user.User;
 import com.tweteroo.apiTweteroo.domain.user.UserDTO;
-import com.tweteroo.apiTweteroo.repositories.UserRepository;
 import com.tweteroo.apiTweteroo.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +13,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
