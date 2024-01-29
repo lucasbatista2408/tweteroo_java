@@ -49,7 +49,7 @@ public class UserService {
         User updated = new User();
 
         updated.setId(id);
-        updated.setProfileUrl(data.profileUrl());
+        updated.setAvatar(data.avatar());
         updated.setUsername(data.username());
 
         User response = repository.save(updated);
