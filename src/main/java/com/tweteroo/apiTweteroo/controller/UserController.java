@@ -63,8 +63,10 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUser/{id}")
-    public void deleteById(@PathVariable("id") UUID id) {
+    public ResponseEntity<Void> deleteById(@PathVariable("id") UUID id) {
         userService.deleteById(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     
     @PutMapping("/updateUser/{id}")
