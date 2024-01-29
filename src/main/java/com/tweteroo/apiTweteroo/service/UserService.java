@@ -26,16 +26,19 @@ public class UserService {
         return response;
     }
 
-    public Optional<User> getUser(UUID id){
-        
-        Optional<User> response = repository.findById(id);
+    public Optional<User> findUser(UUID id){
 
-        return response;
+        return repository.findById(id);
     }
 
     public List<User> getAllUsers(){
 
         return repository.findAll();
+    }
+
+    public User getUser(UUID id){
+
+        return repository.getUserById(id);
     }
 
     public void deleteById(UUID id){

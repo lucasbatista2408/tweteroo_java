@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +22,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-
-
 
 @RestController
 @RequestMapping("/api/user")
@@ -42,25 +41,25 @@ public class UserController {
 
         User response = userService.createUser(newUser);
 
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
        
     @GetMapping("/getUser/{id}")
     public ResponseEntity<Object> getUser(@PathVariable UUID id) {
         
-        Optional<User> response = userService.getUser(id);
+        Optional<User> response = userService.findUser(id);
 
         if(!response.isPresent()){
             return ResponseEntity.badRequest().build();
         }
         
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/getUser/all")
-    public List<User> getAllUsers() {
+    public ResponseEntity<List<User>> getAllUsers() {
 
-        return userService.getAllUsers();
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers());
     }
 
     @DeleteMapping("/deleteUser/{id}")
@@ -71,7 +70,7 @@ public class UserController {
     @PutMapping("/updateUser/{id}")
     public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody UserDTO data) {
 
-        Optional<User> user = userService.getUser(id);
+        Optional<User> user = userService.findUser(id);
 
         if (!user.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

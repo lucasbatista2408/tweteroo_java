@@ -15,10 +15,7 @@ public class TweetService {
     }
 
     public Tweet insertTweet(Tweet data){
-
-        Tweet response = repository.save(data);
-
-        return response;
+        return repository.save(data);
     }
     
 }

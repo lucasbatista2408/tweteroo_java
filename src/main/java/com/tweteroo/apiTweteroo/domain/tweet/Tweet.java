@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,27 +26,21 @@ import jakarta.persistence.Table;
 @NoArgsConstructor
 @Entity
 @ToString
-@Table(name = "tweets")
+@Table(name = "tweet")
 public class Tweet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @Column(length = 280, nullable = false)
     private String text;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    public Tweet(TweetDTO tweet){
-        this.text = tweet.text();
-        this.user = tweet.user();
-    }
+    
+    @Column(nullable = false)
+    private User userName;
 
     public Tweet(String text, User user){
         this.text = text;
-        this.user = user;
+        this.userName = user;
     }
 }
