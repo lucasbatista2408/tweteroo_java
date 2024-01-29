@@ -41,7 +41,7 @@ public class UserController {
 
         User response = userService.createUser(newUser);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
        
     @GetMapping("/getUser/{id}")
