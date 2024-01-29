@@ -52,11 +52,8 @@ public class TweetController {
     }
 
     @GetMapping("/user/{id}")
-    public void getMethodName(@PathVariable("id") UUID id) {
-
-        userService.getUser(id);
-
-
+    public ResponseEntity<List<Tweet>> findByUserId(@PathVariable("id") UUID id) {
+        return ResponseEntity.status(HttpStatus.OK).body(tweetService.findByUserId(id));
     }
     
     

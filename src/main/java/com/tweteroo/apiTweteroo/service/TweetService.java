@@ -1,6 +1,7 @@
 package com.tweteroo.apiTweteroo.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,9 @@ public class TweetService {
     
     public List<Tweet> getAllTweets(){
         return repository.findAll();
+    }
+
+    public List<Tweet> findByUserId(UUID id){
+        return repository.findByUserId(id);
     }
 }
